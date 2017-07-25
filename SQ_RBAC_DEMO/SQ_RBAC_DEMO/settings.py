@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web.apps.WebConfig',
+    'rbac',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rbac.middleware.rbac.RbacMiddleware',
 ]
 
 ROOT_URLCONF = 'SQ_RBAC_DEMO.urls'
@@ -55,8 +57,7 @@ ROOT_URLCONF = 'SQ_RBAC_DEMO.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,9 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -120,3 +121,39 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# ############################## RBAC权限相关配置开始 ##############################
+# # 无需权限控制的URL
+RBAC_NO_AUTH_URL = [
+    '/login.html',
+    '/index.html',
+    '/register.html',
+    '/admin.*',
+    '/rbac.*',
+]
+
+# session中保存权限信息的Key
+RBAC_PERMISSION_SESSION_KEY = "rbac_permission_session_key"
+
+# Http请求中传入的参数，根据其获取GET、POST、EDIT等检测用户是否具有相应权限
+# 例如：
+#       http://www.example.com?md=get   表示获取
+#       http://www.example.com?md=post  表示添加
+#       http://www.example.com?md=del   表示删除
+RBAC_QUERY_KEY = "md"
+RBAC_DEFAULT_QUERY_VALUE = "look"
+
+# 无权访问时，页面提示信息
+RBAC_PERMISSION_MSG = "无权限访问"
+
+# Session中保存菜单和权限信息的Key
+RBAC_MENU_PERMISSION_SESSION_KEY = "rbac_menu_permission_session_key"
+RBAC_MENU_KEY = "rbac_menu_key"
+RBAC_MENU_PERMISSION_KEY = "rbac_menu_permission_key"
+
+# 菜单主题
+RBAC_THEME = "default"
+# ############################## RBAC权限相关配置结束 ##############################
