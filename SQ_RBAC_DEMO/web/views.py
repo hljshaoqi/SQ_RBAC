@@ -26,4 +26,4 @@ def index(request):
     if not request.session.get('user_info'):
         return redirect('/login.html')
 
-    return HttpResponse('ok')
+    return render(request, 'index.html')

@@ -108,6 +108,7 @@ class Permission2Action2Role(models.Model):
     action = models.ForeignKey(Action, verbose_name='操作', related_name='permissions')
     role = models.ForeignKey(Role, verbose_name='角色', related_name='p2as')
 
+
     class Meta:
         verbose_name = '权限操作关系表'
         verbose_name_plural = verbose_name

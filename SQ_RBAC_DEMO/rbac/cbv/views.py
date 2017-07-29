@@ -19,6 +19,7 @@ class MyView(RbacView,View):
     MyView类中方法的名称取决于数据库action表code字段的值。PS:此处方法为小写
 """
 
+
 class RbacView(object):
     def dispatch(self, request, *args, **kwargs):
         permission_code = request.permission_code.lower()
